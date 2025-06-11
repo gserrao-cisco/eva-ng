@@ -32,6 +32,9 @@ Focus on identifying the following crucial elements:
    - Is it limited to specific directories?
 
 
+# Best Practices to Follow
+
+## How to Choose the Vulnerable URI
 When choosing the vulnerable "uri" make sure that this is the part of the uri that is always required to execute
 an attack. Attackers will try to access different resources and the rule must be generic enough to alert on every
 attack but specific enough to not block normal traffic. 
