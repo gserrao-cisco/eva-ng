@@ -154,11 +154,7 @@ def deep_research(topic, triage_report) -> ResearchReport:
 def create_research_report(topic: str) -> ResearchReport:
     """Generic cyber‑research agent using Google (via SerpAPI)."""
 
-    #google_results = google_search(topic)
-
-
-    # MOCKUP
-
+    # Example return object from the Google search agent
     test_data = {
         "title": "CVE-2024-57727: Path Traversal Vulnerability in SimpleHelp",
         "summary": "CVE-2024-57727 is a critical unauthenticated path traversal vulnerability in the SimpleHelp remote support software (up to v5.5.7). It allows attackers to read arbitrary files from the server, including sensitive files like configuration files and private keys, by sending specially crafted HTTP requests. Proof of concept (PoC) code is publicly available, and exploitation has been demonstrated on both Windows and Linux systems. The vulnerability is widely discussed in security blogs and advisories, with detailed writeups and detection/mitigation strategies. Users are strongly advised to upgrade to SimpleHelp v5.5.8 or later.",
@@ -188,10 +184,7 @@ def create_research_report(topic: str) -> ResearchReport:
         ]
     }
 
-    google_results = SearchResultModel(**test_data)
-
-    print(google_results)
-
+    google_results = google_search(topic)
     deep_research_report = deep_research(topic, google_results)
     print(deep_research_report)
 
