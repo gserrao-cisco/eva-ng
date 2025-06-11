@@ -1,4 +1,5 @@
 import logging
+import os
 from typing import List
 from langchain import hub
 from langchain.agents import AgentExecutor, create_openai_tools_agent
@@ -10,9 +11,16 @@ from eva.tools.google import google_search_tool
 from eva.tools.nist import nist_cve_lookup_tool
 from typing import Optional
 
+# workaround for Cisco langsmith not having the prompt we want
+import pickle
+
 def react_agent_builder(additional_tools: List[Tool] = None):
 
-    react_prompt = hub.pull("hwchase17/openai-tools-agent")
+    if os.getenv("LANGCHAIN_TRACING_V2", None):
+        with open("./hwchase_17_openai_tools_agent.pkl", "rb") as f:
+            react_prompt = pickle.load(f)
+    else:
+        react_prompt = hub.pull("hwchase17/openai-tools-agent")
 
     tools_for_agent = [
         get_web_resource_tool,
