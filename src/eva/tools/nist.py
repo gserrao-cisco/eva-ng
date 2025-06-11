@@ -7,7 +7,6 @@ def cve_lookup(cve_id: str) -> dict:
     Lookup a CVE ID using the NIST NVD API.
     """
 
-    url = f"https://services.nvd.nist.gov/rest/json/cve/{cve_id}"
     url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?cveId={cve_id.upper()}"
 
     response = httpx.get(url)
