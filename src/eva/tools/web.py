@@ -11,7 +11,8 @@ def get_web_resource(url: str):
     """
     response = httpx.get(url, timeout=120)
     if response.status_code != 200:
-        raise ValueError(f"Failed to fetch url: {response.status_code}")
+        return "<unable to retrieve web results, no content available>"
+
 
     soup = bs4.BeautifulSoup(response.text, 'html.parser')
     return soup.get_text()
