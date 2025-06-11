@@ -67,10 +67,8 @@ def run(report: str):
     with open("./output.json", "w") as fout:
         fout.write(generate_output.json())
 
-    # Example: list directory contents using 'ls' on Unix or 'dir' on Windows.
     result = subprocess.run([f"{os.getenv('RULESHELL_PATH')}/ruleshell", "output.json"], capture_output=True, text=True)
 
-    # Check if the command was successful
     if result.returncode == 0:
         print("Command executed successfully!")
         print("Output:")
