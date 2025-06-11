@@ -1,5 +1,3 @@
-#TODO maybe break this down into modules
-
 from typing import List
 import logging
 
@@ -37,11 +35,13 @@ The vulnerability to research is {vulnerability}
 {format_instructions}
 """
 
+
 class ResearchReference(BaseModel):
     url: str = Field(description="URL of the reference")
     title: str = Field(description="Title of the reference")
     description: str = Field(description="Description of the reference")
     date: str = Field(description="Date of the reference")
+
 
 class VulnerabilityDetails(BaseModel):
     cve_id: str = Field(description="CVE identifier for the vulnerability")
@@ -53,20 +53,26 @@ class VulnerabilityDetails(BaseModel):
     cvss_score: str = Field(description="CVSS score of the vulnerability")
     epss_score: str = Field(description="EPSS score of the vulnerability")
 
+
 class VulnerabilityMechanics(BaseModel):
     summary: str = Field(description="Summary of how the vulnerability is triggered by an attacker")
     example: str = Field(description="Step by step example demonstrating how an attacker exploits the vulnerability")
+
 
 class ProofOfConcept(BaseModel):
     code: str = Field(description="Proof of concept code demonstrating the vulnerability")
     source: ResearchReference = Field(description="Source of the proof of concept code")
 
+
 class ResearchNotes(BaseModel):
-    vulnerability_mechanics: VulnerabilityMechanics = Field(description="A detailed description of how the vulnerability is triggered")
-    proof_of_concept: str = Field(description="Best effort code that generates network traffic to reproduce the vulnerability")
-    vulnerable_code_path : str = Field(description="Description of the vulnerable code path if available")
-    vulnerable_code_line : str = Field(description="Line number of the vulnerable code if available")
-    vulnerable_code_snippet : str = Field(description="Snippet of the vulnerable code if available")
+    vulnerability_mechanics: VulnerabilityMechanics = Field(
+        description="A detailed description of how the vulnerability is triggered")
+    proof_of_concept: str = Field(
+        description="Best effort code that generates network traffic to reproduce the vulnerability")
+    vulnerable_code_path: str = Field(description="Description of the vulnerable code path if available")
+    vulnerable_code_line: str = Field(description="Line number of the vulnerable code if available")
+    vulnerable_code_snippet: str = Field(description="Snippet of the vulnerable code if available")
+
 
 class ResearchReport(BaseModel):
     title: str = Field(description="Title of the report")
@@ -77,18 +83,20 @@ class ResearchReport(BaseModel):
     references: list[ResearchReference] = Field(description="List of references")
 
 
-
 class SearchResultPocModel(BaseModel):
     url: str = Field(description="the url")
     title: str = Field(description="the title")
+
 
 class SearchResultWriteupModel(BaseModel):
     url: str = Field(description="the url")
     title: str = Field(description="the title")
 
+
 class SearchResultModel(BaseModel):
     pocs: List[SearchResultPocModel] = Field(description="List of URLs that contain proof of concept code")
-    writeups: List[SearchResultWriteupModel] = Field(description="List of URLs that contain writeups of the vulnerability")
+    writeups: List[SearchResultWriteupModel] = Field(
+        description="List of URLs that contain writeups of the vulnerability")
     title: str = Field(description="the title")
     summary: str = Field(description="executive summary of research topic based on search results")
 
@@ -117,8 +125,8 @@ def google_search(vulnerability: str) -> SearchResultModel:
     log.debug(result)
     return result['output']
 
-def deep_research(topic, triage_report) -> ResearchReport:
 
+def deep_research(topic, triage_report) -> ResearchReport:
     prompt_template = PromptTemplate(
         template=deep_research_template,
         input_variables=[
